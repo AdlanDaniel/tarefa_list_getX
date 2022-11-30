@@ -12,16 +12,16 @@ class PagInicial extends StatefulWidget {
 }
 
 class _PagInicialState extends State<PagInicial> {
-  @override
-  void initState() {
-    super.initState();
+  var controller = Get.find<PagInicialController>();
 
-    Get.find<PagInicialController>().readList().then((value) {
-      print(value);
+  // @override
+  // void initState() {
+  //   // TODO: implement initState
+  //   super.initState();
 
-      Get.find<PagInicialController>().listAction = json.decode(value);
-    });
-  }
+  //     controller.readMsg();
+
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,7 @@ class _PagInicialState extends State<PagInicial> {
           Row(children: [
             Expanded(
                 child: TextFormField(
-              controller: Get.find<PagInicialController>().tarefaEC,
+              controller: controller.msgEC,
               decoration: InputDecoration(
                   labelText: 'Nova Tarefa :',
                   labelStyle: TextStyle(color: Colors.blueAccent)),
@@ -50,40 +50,34 @@ class _PagInicialState extends State<PagInicial> {
                         MaterialStateProperty.all(Colors.blueAccent),
                   ),
                   onPressed: () {
-                    Get.find<PagInicialController>().addAction();
-                    Get.find<PagInicialController>().saveListButton();
+                    controller.saveMsg();
                   },
                   child: Text('ADD'),
                 )),
           ]),
-          Expanded(
-              child: Obx(
-            () => ListView.builder(
-                padding: EdgeInsets.only(top: 10),
-                itemCount: Get.find<PagInicialController>().listAction.length,
-                itemBuilder: (context, index) {
-                  return Obx(
-                    () => CheckboxListTile(
-                      title: Text(Get.find<PagInicialController>()
-                          .listAction[index]['title']),
-                      value: Get.find<PagInicialController>().listAction[index]
-                          ['check'],
-                      onChanged: (check) {
-                        Get.find<PagInicialController>().listAction[index]
-                            ['check'] = check;
-                        Get.find<PagInicialController>().saveListCheck(
-                            Get.find<PagInicialController>().listAction);
-                      },
-                      secondary: CircleAvatar(
-                        child: Icon(Get.find<PagInicialController>()
-                                .listAction[index]['check']
-                            ? Icons.check
-                            : Icons.error),
-                      ),
-                    ),
-                  );
-                }),
-          ))
+          Padding(
+            padding: const EdgeInsets.all(60),
+            child: Center(
+                child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [Obx((() => Text(controller.msgInicial.value)))],
+            )),
+          )
+          // Expanded(
+          //   child: ListView.builder(
+          //       padding: EdgeInsets.only(top: 10),
+          //       itemCount: list.length,
+          //       itemBuilder: (context, index) {
+          //         return CheckboxListTile(
+          //           title: Text(list[index]),
+          //           value: true,
+          //           onChanged: (_) {},
+          //           secondary: CircleAvatar(
+          //             child: Icon(Icons.check),
+          //           ),
+          //         );
+          //       }),
+          // )
         ]),
       ),
     );

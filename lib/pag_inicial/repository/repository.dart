@@ -5,7 +5,7 @@ import 'package:path_provider/path_provider.dart';
 
 abstract class SessionRepository {
   Future<File> getFile();
-  Future<File> saveListButton(List list);
-  Future<File> saveListCheck(List list);
-  Future readList();
+  Future<File> saveMsgButton(String msg);
+  // Future<File> saveListCheck(String);
+  Future readMsg();
 }

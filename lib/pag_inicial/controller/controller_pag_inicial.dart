@@ -14,30 +14,20 @@ class PagInicialController extends GetxController {
   PagInicialController({
     required this.repository,
   });
-
-  TextEditingController tarefaEC = TextEditingController();
-  RxList listAction = [].obs;
-  addAction() {
-    RxMap task = {}.obs;
-    task['title'] = tarefaEC.text;
-    task['check'] = false;
-    listAction.add(task);
-    tarefaEC.clear();
-
-    // repository.saveListButton(listAction);
+  @override
+  void onInit() {
+    readMsg();
+    super.onInit();
   }
 
-  Future saveListButton() async {
-    await repository.saveListButton(listAction);
+  TextEditingController msgEC = TextEditingController();
+  var msgInicial = 'Mensagem inicial'.obs;
+  saveMsg() {
+    msgInicial.value = msgEC.text;
+    repository.saveMsgButton(msgEC.text);
   }
 
-  Future<void> saveListCheck(List list) async {
-    await repository.saveListCheck(list);
-  }
-
-  Future readList() async {
-    await repository.readList();
-    print(repository.readList().runtimeType);
-    print(repository.readList());
+  readMsg() {
+    repository.readMsg().then((value) => msgInicial.value = jsonDecode(value));
   }
 }

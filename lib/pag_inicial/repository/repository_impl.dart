@@ -14,29 +14,29 @@ class SessionRepositoryImpl implements SessionRepository {
   }
 
   @override
-  Future<File> saveListButton(List list) async {
-    String listJson = jsonEncode(list);
+  Future<File> saveMsgButton(String msg) async {
+    String msgJson = jsonEncode(msg);
     File file = await getFile();
 
-    return file.writeAsString(listJson);
+    return file.writeAsString(msgJson);
   }
 
   @override
-  Future readList() async {
+  Future readMsg() async {
     try {
       File file = await getFile();
-      print(file.exists());
-      print(file.readAsString().toString());
+
       return file.readAsString();
     } catch (e) {
       print(e.toString());
+      return null;
     }
   }
 
-  @override
-  Future<File> saveListCheck(List list) async {
-    String listJson = jsonEncode(list);
-    File file = await getFile();
-    return file.writeAsString(listJson);
-  }
+  // @override
+  // Future<File> saveListCheck(List list) async {
+  //   String listJson = jsonEncode(list);
+  //   File file = await getFile();
+  //   return file.writeAsString(listJson);
+  // }
 }
